@@ -4,7 +4,9 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
+import { ensureAdmin } from '../db/initAdmin.ts'
 
+import usersRouter from './routes/users.ts'
 import publicRouter from './routes/public.ts'
 
 
@@ -38,10 +40,13 @@ allowedHeaders: ['Content-Type', 'Authorization']
 }))
 // Routes publiques
 app.use('/api/public', publicRouter)
+app.use('/api/users', usersRouter)
 // Chargement du certificat et clé générés par mkcert (étape 0)
-const key = fs.readFileSync('../certs/localhost-key.pem')
-const cert = fs.readFileSync('../certs/localhost.pem')
+const key = fs.readFileSync('../backend/certs/localhost-key.pem')
+const cert = fs.readFileSync('../backend/certs/localhost.pem')
 // Lancement du serveur HTTPS
 https.createServer({ key, cert }, app).listen(4000, () => {
 console.log('👍 Serveur API démarré sur https://localhost:4000')
 })
+
+await ensureAdmin()
