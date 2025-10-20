@@ -33,4 +33,23 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    const {id} = req.params
+
+    try{
+        const {rows} = await pool.query(
+            'SELECT id, login, role FROM users WHERE id = $1', [id]
+        )
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'Utilisateur non trouvé'})
+        }
+
+        res.json(rows[0])
+    } catch (err){
+        console.error(err)
+        res.status(500).json({error: 'Erreur serveur'})
+    }
+})
+
 export default router

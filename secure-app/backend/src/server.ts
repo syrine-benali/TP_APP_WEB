@@ -9,6 +9,12 @@ import { ensureAdmin } from '../db/initAdmin.ts'
 import usersRouter from './routes/users.ts'
 import publicRouter from './routes/public.ts'
 
+import authRouter from './routes/auth.ts'
+import { verifyToken } from './middleware/token-management.ts'
+import { requireAdmin } from './middleware/auth-admin.ts'
+
+import 'dotenv/config'
+
 
 // Création de l’application Express
 const app = express()
@@ -40,10 +46,14 @@ allowedHeaders: ['Content-Type', 'Authorization']
 }))
 // Routes publiques
 app.use('/api/public', publicRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/users', verifyToken, usersRouter) //protégé
+app.use('/api/auth', authRouter)
+app.use('/api/admin', verifyToken, requireAdmin, (req, res) => {
+    res.json({ message: 'Bienvenue admin' });
+})
 // Chargement du certificat et clé générés par mkcert (étape 0)
-const key = fs.readFileSync('../backend/certs/localhost-key.pem')
-const cert = fs.readFileSync('../backend/certs/localhost.pem')
+const key = fs.readFileSync('./certs/localhost-key.pem')
+const cert = fs.readFileSync('./certs/localhost.pem')
 // Lancement du serveur HTTPS
 https.createServer({ key, cert }, app).listen(4000, () => {
 console.log('👍 Serveur API démarré sur https://localhost:4000')
