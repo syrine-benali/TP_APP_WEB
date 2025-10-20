@@ -2,6 +2,8 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import pool from '../../db/database.ts'
+import { JWT_SECRET } from '../config/en.ts'
+import type { TokenPayload } from '../types/token-payload.ts'
 import { verifyToken, createAccessToken, createRefreshToken } from '../middleware/token-management.ts';
 
 const router = Router()
@@ -52,6 +54,22 @@ router.post('/register', async (req, res) => {
         console.error(err)
         res.status(500).json({error: 'Erreur serveur'})
 
+    }
+})
+
+//génération d'un nouveau access_token à partir du refresh_token
+router.post('/refresh', (req, res) => {
+    const refresh = req.cookies?.refresh_token
+    if (!refresh) return res.status(401).json({ error: 'Refresh token manquant' })
+    try {
+        const decoded = jwt.verify(refresh, JWT_SECRET) as TokenPayload
+        const newAccess = createAccessToken({ id: decoded.id, role: decoded.role })
+        res.cookie('access_token', newAccess, {
+            httpOnly: true, secure: true, sameSite: 'strict', maxAge: 15 * 60 * 1000,
+        })
+        res.json({ message: 'Token renouvelé' })
+    } catch {
+        res.status(403).json({ error: 'Refresh token invalide ou expiré' })
     }
 })
 
