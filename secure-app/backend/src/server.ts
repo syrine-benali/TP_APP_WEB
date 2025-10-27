@@ -39,8 +39,8 @@ app.use(express.json())
 app.use(cookieParser())
 // Configuration CORS : autoriser le front Angular en HTTPS local
 app.use(cors({
-origin: 'https://localhost:4200',
-credentials: true,
+origin: 'https://localhost:4200', //origine autorisée (Angular)
+credentials: true,                //permet les cookies cross-origin
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['Content-Type', 'Authorization']
 }))
