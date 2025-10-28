@@ -17,11 +17,11 @@ export class AuthService {
     private readonly _error = signal<string | null>(null)
 
     // ---Etat exposé (readonly, computed) ---
-    readonly currentUser = this._currentUser.asReadonly
+    readonly currentUser = this._currentUser.asReadonly()
     readonly isLoggedIn = computed(() => this._currentUser() != null)
     readonly isAdmin = computed(() => this._currentUser()?.role === 'admin')
-    readonly isLoading = this._isLoading.asReadonly
-    readonly error = this._error.asReadonly
+    readonly isLoading = this._isLoading.asReadonly()
+    readonly error = this._error.asReadonly()
 
     // ---Connexion---
     login(login: string, password: string){

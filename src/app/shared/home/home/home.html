@@ -1,0 +1,18 @@
+<div class="home-container">
+    @if (auth.isLoggedIn()) {
+        <div class="home-header">
+            <h2>Profil</h2>
+            <div class="actions">
+                <div class="me">
+                    <p>Nom: {{ displayName() }}</p>
+                </div>
+                <button class="pastel-btn" (click)="logout()">Déconnexion</button>
+            </div>
+        </div>
+    } @else {
+        <div class="not-logged">
+            <p>Personne n'est connecté.</p>
+            <a routerLink="/login" class="pastel-link">Aller à la page de connexion</a>
+        </div>
+    }
+</div>

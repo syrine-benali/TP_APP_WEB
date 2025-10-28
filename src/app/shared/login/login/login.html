@@ -1,1 +1,38 @@
-<p>login works!</p>
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="username">Username</label>
+            <input id="username" type="text" formControlName="username" placeholder="Username" />
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" formControlName="password" placeholder="Password" />
+        </div>
+
+        <div>
+            <button [disabled]="loginForm.invalid || isLoading()" type="submit" class="pastel-btn primary">
+                Se connecter
+            </button>
+        </div>
+    </form>
+
+    <div class="status">
+        <div>
+            @if(isLoading()){
+                <p>Connexion en cours...</p>
+            }
+        </div>
+        <div>
+            @if(showWaiting && isLoading()){
+                <p>Le réseau est lent, veuillez patienter...</p>
+            }
+        </div>
+        <div>
+            @if(error()){
+                <p>{{ error() }}</p>           
+            }
+        </div>
+    </div>
+</div>
+    
