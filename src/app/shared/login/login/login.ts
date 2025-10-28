@@ -27,7 +27,12 @@ export class Login {
     // navigate to /home when logged in
     effect(() => {
       if (this.auth.isLoggedIn()) {
-        void this.router.navigateByUrl('/home');
+        // If the user is admin, go to /admin, otherwise /home
+        if (this.auth.isAdmin()) {
+          void this.router.navigateByUrl('/admin');
+        } else {
+          void this.router.navigateByUrl('/home');
+        }
       }
     });
 
