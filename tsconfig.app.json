@@ -7,9 +7,9 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
+    "secure-app/frontend/src/**/*.ts"
   ],
   "exclude": [
-    "src/**/*.spec.ts"
+    "secure-app/frontend/src/**/*.spec.ts"
   ]
 }
