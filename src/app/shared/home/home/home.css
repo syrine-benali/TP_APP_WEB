@@ -1,7 +1,7 @@
 /* Simple styling for home page */
 .home-container{
-  max-width:900px;
-  margin:3rem auto;
+  max-width:1000px;
+  margin:2.5rem auto;
   padding:1.5rem;
   background: linear-gradient(180deg, #fff 0%, #fbfbff 100%);
   border-radius:12px;
@@ -13,9 +13,12 @@
 .home-header h2{margin:0}
 .home-header .actions{display:flex;gap:1rem;align-items:center}
 .pastel-btn{padding:0.5rem 0.9rem;border-radius:8px;border:0;background:linear-gradient(90deg,#f6d6e7,#d6e7f6);cursor:pointer}
-.users-table{width:100%;border-collapse:collapse;margin-top:1rem}
-.users-table th,.users-table td{padding:0.6rem 0.8rem;border-bottom:1px solid #f1f5f9;text-align:left}
-.status{color:#6b7280}
+.users-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:1rem}
+.users-table thead th{font-weight:600;padding:0.65rem 0.9rem;text-align:left;color:var(--muted)}
+.users-table tbody tr{background:var(--card-bg);border-radius:8px}
+.users-table th,.users-table td{padding:0.9rem 0.9rem;border-bottom:none}
+.users-table tbody tr + tr td{border-top:8px solid transparent}
+.status{color:var(--muted)}
 .status.error{color:#ef4444}
 .not-logged{padding:2rem;text-align:center}
 .pastel-link{color:var(--accent-2);text-decoration:underline}

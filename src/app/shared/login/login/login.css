@@ -90,6 +90,9 @@
 	color: var(--muted);
 }
 
+.login-footer{display:flex;justify-content:space-between;align-items:center;margin-top:0.75rem;font-size:0.9rem}
+.login-footer .help{color:var(--muted)}
+
 .login-container .status .error{
 	color: var(--danger);
 	background: rgba(239,68,68,0.06);

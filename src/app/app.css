@@ -56,6 +56,22 @@ body{
 
 .nav-links a.active{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:var(--accent-foreground)}
 
+/* Global pastel button */
+.pastel-btn{
+	display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1rem;border-radius:10px;border:0;font-weight:600;cursor:pointer;
+	background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:var(--accent-foreground);
+	box-shadow: 0 6px 18px rgba(16,24,40,0.06);transition:transform .12s ease,opacity .12s ease;
+}
+.pastel-btn:hover{transform:translateY(-2px)}
+
+/* Cards and containers */
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem;box-shadow:0 8px 24px rgba(16,24,40,0.04)}
+.center-row{display:flex;align-items:center;justify-content:center}
+
+/* Small utilities */
+.muted{color:var(--muted)}
+.error{color:#ef4444}
+
 /* Layout helpers */
 .login-wrapper{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px);}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
