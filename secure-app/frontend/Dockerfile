@@ -2,12 +2,7 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-# Use npm ci when a lockfile is present, otherwise fall back to npm install
-RUN if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then \
-			npm ci; \
-		else \
-			npm install --no-audit --no-fund; \
-		fi
+RUN npm ci
 COPY . .
 RUN npm run build --omit=dev
 
@@ -19,7 +14,7 @@ WORKDIR /usr/share/nginx/html
 # il faut copier les fichiers de prod (vérifier le bon répertoire dans dit qui
 # doit contenir le index.html et le reste)
 #COPY --from=build /app/dist/ /usr/share/nginx/html #ancienne version de Angular
-COPY --from=build /app/dist/full-app/browser/ /usr/share/nginx/html/ #Angular 20 (project name: full-app)
+COPY --from=build /app/dist/frontend/browser/ /usr/share/nginx/html/ 
 
 # Copie du fichier de configuration nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
