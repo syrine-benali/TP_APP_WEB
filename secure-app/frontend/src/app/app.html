@@ -1,0 +1,14 @@
+<nav class="main-nav">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <h2>Full App</h2>
+        </div>
+        <div class="nav-links">
+            <a routerLink="home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
+            <a routerLink="login" routerLinkActive="active">Login</a>
+            <a routerLink="admin" routerLinkActive="active"> Admin </a>
+        </div>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>
