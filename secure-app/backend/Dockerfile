@@ -5,16 +5,15 @@ COPY package*.json ./
 RUN npm ci
 COPY tsconfig.json tsconfig.build.json ./
 COPY src ./src
-RUN npx tsc -p tsconfig.json --pretty false --noEmitOnError false && \
-    echo "👍 Compilation TS terminée" && \
-    ls -la dist
-    
-# --- Étape 2 : Exécution en production ---
+COPY db ./db
+
+# --- Étape 2 : Exécution en production avec tsx ---
 FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
-RUN npm ci --omit=dev
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/src ./src
+COPY --from=build /app/db ./db
+RUN npm ci
 EXPOSE 4000
-CMD ["node", "dist/server.js"]
+CMD ["npx", "tsx", "src/server.ts"]
