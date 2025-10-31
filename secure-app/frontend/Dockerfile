@@ -1,9 +1,18 @@
 # --- Étape 1 : Build Angular ---
 FROM node:22-alpine AS build
 WORKDIR /app
-COPY package*.json ./
+
+# Copy package files and install dependencies
+COPY secure-app/frontend/package*.json ./
 RUN npm ci
-COPY . .
+
+# Copy all Angular project files
+COPY secure-app/frontend/ ./
+
+# Copy public assets from workspace root
+COPY public/ ./public/
+
+# Build the Angular application
 RUN npm run build --omit=dev
 
 # --- Étape 2 : Serveur Nginx ---
@@ -14,10 +23,10 @@ WORKDIR /usr/share/nginx/html
 # il faut copier les fichiers de prod (vérifier le bon répertoire dans dit qui
 # doit contenir le index.html et le reste)
 #COPY --from=build /app/dist/ /usr/share/nginx/html #ancienne version de Angular
-COPY --from=build /app/dist/frontend/browser/ /usr/share/nginx/html/ 
+COPY --from=build /app/dist/full-app/browser/ /usr/share/nginx/html/ 
 
 # Copie du fichier de configuration nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY secure-app/frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

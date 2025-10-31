@@ -47,8 +47,8 @@ services:
   # --------------------------------------------------------------------
   frontend:
     build: # Build du front Angular + Nginx
-      context: ./frontend # répertoire racine du frontend
-      dockerfile: Dockerfile # Dockerfile pour le front (multi-stage avec Nginx)
+      context: .. # répertoire TP_APP_WEB (contient tsconfig et la structure complète)
+      dockerfile: secure-app/frontend/Dockerfile # Dockerfile pour le front (multi-stage avec Nginx)
     container_name: secureapp_frontend_prod
     restart: unless-stopped
     depends_on:
