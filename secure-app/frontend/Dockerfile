@@ -28,5 +28,9 @@ COPY --from=build /app/dist/full-app/browser/ /usr/share/nginx/html/
 # Copie du fichier de configuration nginx
 COPY secure-app/frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+# Copie des certificats SSL
+COPY secure-app/backend/certs/localhost.pem /etc/nginx/certs/localhost.pem
+COPY secure-app/backend/certs/localhost-key.pem /etc/nginx/certs/localhost-key.pem
+
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
